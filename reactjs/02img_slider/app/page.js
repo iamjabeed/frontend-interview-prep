@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,6 +46,16 @@ export default function Home() {
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? imgData.length - 1 : prev - 1));
   };
+
+  useEffect(() => {
+    const autoSlide = setTimeout(() => {
+      handleNext();
+    }, 3000);
+
+    return () => {
+      clearTimeout(autoSlide);
+    };
+  }, [currentIndex]);
 
   return (
     <div className="flex flex-col justify-center items-center w-full my-6 ">
