@@ -73,8 +73,13 @@ body {
 .todo-list-container > ul > li {
   font-size: 20px;
 }
-.todo-list-container > ul > button {
+.todo-list-container > ul > .btns > button {
   /* font-size: 20px; */
   padding: 10px;
   font-weight: 700;
+}
+
+.btns {
+  display: flex;
+  gap: 10px;
 }

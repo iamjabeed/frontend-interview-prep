@@ -3,22 +3,47 @@ import { useState } from "react";
 const Todo = () => {
   const [inputValue, setInputValue] = useState("");
   const [todos, setTodos] = useState([]);
+  const [editId, setEditId] = useState(null);
+
+  //* Add todo
+  //   const handleAddTodo = () => {
+  //     if (inputValue.trim() != "") {
+  //       setTodos([...todos, { id: Date.now(), item: inputValue }]);
+  //       setInputValue("");
+  //     }
+  //   };
 
   const handleAddTodo = () => {
-    if (inputValue.trim() != "") {
-      setTodos([...todos, inputValue]);
+    if (inputValue.trim() !== "") {
+      if (editId !== null) {
+        // If in edit mode, update the existing todo
+        const updatedTodos = todos.map((todo) =>
+          todo.id === editId ? { ...todo, item: inputValue } : todo
+        );
+        setTodos(updatedTodos);
+        setEditId(null);
+      } else {
+        // If not in edit mode, add a new todo
+        setTodos([...todos, { id: Date.now(), item: inputValue }]);
+      }
+
       setInputValue("");
     }
-    // console.log(todos);
-    // if (inputValue.trim() == "") alert("Todo can't  be empty");
   };
 
+  //* Delete todo
   const handleDelete = (id) => {
-    const updatedTodo = todos.filter((todo, i) => {
-      return id != i;
-    });
+    const updatedTodo = todos.filter((todo) => id != todo.id);
     setTodos(updatedTodo);
   };
+
+  //* Edit todo
+  const handleEdit = (id) => {
+    const editTodo = todos.find((todo) => id === todo.id);
+    setInputValue(editTodo.item);
+    setEditId(id);
+  };
+
   return (
     <>
       <section id="container">
@@ -38,10 +63,13 @@ const Todo = () => {
 
         <div className="todo-list-container">
           {todos &&
-            todos.map((todo, i) => (
-              <ul key={i}>
-                <li>{todo}</li>
-                <button onClick={() => handleDelete(i)}>Delete</button>
+            todos.map((todo) => (
+              <ul key={todo.id}>
+                <li>{todo.item}</li>
+                <div className="btns">
+                  <button onClick={() => handleDelete(todo.id)}>Delete</button>
+                  <button onClick={() => handleEdit(todo.id)}>Edit</button>
+                </div>
               </ul>
             ))}
         </div>
