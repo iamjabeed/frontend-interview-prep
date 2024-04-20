@@ -13,6 +13,24 @@ const App = () => {
     setProduct(data?.products);
     setFiltered(data);
   };
+
+  //POST
+  const addProducts = async (url) => {
+    try {
+      const res = await fetch(url, {
+        method: POST,
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(),
+      });
+      const data = await res.json();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const searchHandler = (e) => {
     const searchValue = e.target.value.toLowerCase();
     const filteredProducts = filtered?.products.filter((p) =>

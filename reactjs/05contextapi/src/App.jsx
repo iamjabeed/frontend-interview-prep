@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { CounterContext } from "./context/counter.jsx";
 import Card from "./components/Card.jsx";
+import FileHandling from "./components/FileHandling.jsx";
 
 const App = () => {
   const counter = useContext(CounterContext);
@@ -9,6 +10,8 @@ const App = () => {
     <div>
       <h1>{counter.count}</h1>
       <Card />
+      <br />
+      <FileHandling />
     </div>
   );
 };
